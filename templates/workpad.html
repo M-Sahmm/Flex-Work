@@ -1,0 +1,364 @@
+{% extends "base.html" %}
+
+{% block title %}Workpad{% endblock %}
+
+{% block head %}
+<meta name="csrf-token" content="{{ csrf }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/workpad.css', v='1.0.2') }}">
+<style>
+/* Modal styles to match inventory modal */
+/* Removed modal styles */
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1><i class="fas fa-tasks"></i> WorkPad</h1>
+</div>
+
+<div class="workpad-container">
+    <div class="workpad-overview">
+        <h2><i class="fas fa-clipboard-list"></i> WorkPad Overview</h2>
+        <p>Welcome to your personal workspace. Organize your tasks, track progress, and boost productivity!</p>
+        
+        <div class="workpad-stats">
+            <div class="workpad-stat">
+                <div class="workpad-stat-number">{{ task_metadata.total_tasks }}</div>
+                <div class="workpad-stat-label">All Tasks</div>
+            </div>
+            <div class="workpad-stat">
+                <div class="workpad-stat-number">{{ task_metadata.in_progress }}</div>
+                <div class="workpad-stat-label">In Progress</div>
+            </div>
+            <div class="workpad-stat">
+                <div class="workpad-stat-number">{{ task_metadata.completed }}</div>
+                <div class="workpad-stat-label">Completed</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="workpad-grid">
+        <div class="workpad-card" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <h3><i class="fas fa-list"></i> To Do</h3>
+            <div class="workpad-card-content" id="todo-tasks">
+                {% for task_id, task in tasks.items() if task.status == 'todo' %}
+                <div class="task-item" draggable="true" ondragstart="drag(event)" id="{{ task_id }}">
+                    <h4>{{ task.title }}</h4>
+                    <p>{{ task.description }}</p>
+                    <div class="task-meta">
+                        <span class="task-date" title="{{ task.created_at }}">
+                            <i class="fas fa-calendar"></i> {{ task.created_at|datetime }}
+                        </span>
+                        <button class="delete-task" onclick="deleteTask('{{ task_id }}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                {% else %}
+                <p class="empty-state">No tasks yet.</p>
+                {% endfor %}
+            </div>
+            <div class="workpad-actions">
+                <button class="action-button" onclick="showCreateTaskModal()">
+                    <i class="fas fa-plus"></i> Add Task
+                </button>
+            </div>
+        </div>
+
+        <div class="workpad-card" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <h3><i class="fas fa-spinner"></i> In Progress</h3>
+            <div class="workpad-card-content" id="in-progress-tasks">
+                {% for task_id, task in tasks.items() if task.status == 'in_progress' %}
+                <div class="task-item" draggable="true" ondragstart="drag(event)" id="{{ task_id }}">
+                    <h4>{{ task.title }}</h4>
+                    <p>{{ task.description }}</p>
+                    <div class="task-meta">
+                        <span class="task-date" title="{{ task.created_at }}">
+                            <i class="fas fa-calendar"></i> {{ task.created_at|datetime }}
+                        </span>
+                        <button class="delete-task" onclick="deleteTask('{{ task_id }}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                {% else %}
+                <p class="empty-state">Tasks you're currently working on will appear here.</p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="workpad-card" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <h3><i class="fas fa-check-circle"></i> Completed</h3>
+            <div class="workpad-card-content" id="completed-tasks">
+                {% for task_id, task in tasks.items() if task.status == 'completed' %}
+                <div class="task-item" draggable="true" ondragstart="drag(event)" id="{{ task_id }}">
+                    <h4>{{ task.title }}</h4>
+                    <p>{{ task.description }}</p>
+                    <div class="task-meta">
+                        <span class="task-date" title="{{ task.created_at }}">
+                            <i class="fas fa-calendar"></i> {{ task.created_at|datetime }}
+                        </span>
+                        <button class="delete-task" onclick="deleteTask('{{ task_id }}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                {% else %}
+                <p class="empty-state">Finished tasks will be shown here.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Create Task Modal -->
+<div id="createTaskModal" class="modal">
+    <div class="modal-content">
+        <h3><i class="fas fa-plus"></i> Create New Task</h3>
+        <form id="createTaskForm" onsubmit="handleCreateTask(event)">
+            <input type="hidden" name="csrf_token" value="{{ csrf }}">
+            
+            <div class="form-group">
+                <label for="taskTitle">Task Title <span class="required">*</span></label>
+                <input type="text" id="taskTitle" name="title" required
+                    placeholder="Enter task title">
+            </div>
+
+            <div class="form-group">
+                <label for="taskDescription">Description <span class="required">*</span></label>
+                <textarea id="taskDescription" name="description" required
+                    placeholder="Enter task description"></textarea>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="form-button" onclick="hideCreateTaskModal()">Cancel</button>
+                <button type="submit" class="form-button">Create Task</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Modal Functions
+function showCreateTaskModal() {
+    const modal = document.getElementById('createTaskModal');
+    modal.classList.add('show');
+    // Focus on title input
+    setTimeout(() => {
+        document.getElementById('taskTitle').focus();
+    }, 100);
+}
+
+function hideCreateTaskModal() {
+    const modal = document.getElementById('createTaskModal');
+    modal.classList.remove('show');
+    // Reset form
+    document.getElementById('createTaskForm').reset();
+}
+
+// Task Creation
+async function handleCreateTask(event) {
+    event.preventDefault();
+
+    const form = event.target;
+    const title = form.title.value.trim();
+    const description = form.description.value.trim();
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+    try {
+        const response = await fetch('/tasks', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': csrfToken
+            },
+            body: JSON.stringify({ title, description })
+        });
+
+        if (!response.ok) {
+            const error = await response.text();
+            throw new Error(error);
+        }
+
+        // Success - hide modal and refresh
+        hideCreateTaskModal();
+        window.location.reload();
+
+    } catch (error) {
+        console.error('Error creating task:', error);
+        alert('Failed to create task. Please try again.');
+    }
+}
+
+// Close modal on outside click
+document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('createTaskModal');
+    
+    // Close on click outside
+    modal.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            hideCreateTaskModal();
+        }
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && modal.classList.contains('show')) {
+            hideCreateTaskModal();
+        }
+    });
+
+    console.log('WorkPad initialized');
+});
+
+// Drag and Drop functionality
+function allowDrop(event) {
+    event.preventDefault();
+    // Find the card element
+    let card = event.target.closest('.workpad-card');
+    if (card) {
+        card.classList.add('drag-over');
+    }
+}
+
+function drag(event) {
+    event.dataTransfer.setData("text", event.target.id);
+    // Remove drag-over class from all cards
+    document.querySelectorAll('.workpad-card').forEach(card => {
+        card.classList.remove('drag-over');
+    });
+}
+
+function drop(event) {
+    event.preventDefault();
+    const taskId = event.dataTransfer.getData("text");
+    const taskElement = document.getElementById(taskId);
+    
+    // Find the card container
+    let dropTarget = event.target.closest('.workpad-card');
+    
+    if (!dropTarget) {
+        console.error('No valid drop target found');
+        return;
+    }
+    
+    // Remove drag-over class
+    dropTarget.classList.remove('drag-over');
+    
+    // Map container IDs to valid status values
+    const statusMap = {
+        'todo-tasks': 'todo',
+        'in-progress-tasks': 'in_progress',
+        'completed-tasks': 'completed'
+    };
+    
+    const contentArea = dropTarget.querySelector('.workpad-card-content');
+    const status = statusMap[contentArea.id];
+    
+    if (!status) {
+        console.error('Invalid drop target:', contentArea.id);
+        return;
+    }
+    
+    // Move the task element
+    contentArea.appendChild(taskElement);
+    
+    // Update the status
+    updateTaskStatus(taskId, status);
+}
+
+// Add dragover/dragleave listeners
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.workpad-card').forEach(card => {
+        card.addEventListener('dragleave', function(e) {
+            // Only remove class if we're leaving the card (not entering a child)
+            if (!e.relatedTarget || !card.contains(e.relatedTarget)) {
+                card.classList.remove('drag-over');
+            }
+        });
+    });
+});
+
+// Update task status
+async function updateTaskStatus(taskId, status) {
+    try {
+        const response = await fetch(`/tasks/${taskId}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({ status })
+        });
+
+        if (!response.ok) {
+            const error = await response.text();
+            throw new Error(error);
+        }
+
+        // Update stats after successful status change
+        updateTaskStats();
+
+    } catch (error) {
+        console.error('Error updating task:', error);
+        alert('Failed to update task. Please try again.');
+    }
+}
+
+// Update task statistics
+async function updateTaskStats() {
+    try {
+        const response = await fetch('/tasks/stats');
+        if (!response.ok) {
+            throw new Error('Failed to fetch stats');
+        }
+        
+        const stats = await response.json();
+        
+        // Update stats display
+        document.querySelector('.workpad-stat:nth-child(1) .workpad-stat-number').textContent = stats.total_tasks;
+        document.querySelector('.workpad-stat:nth-child(2) .workpad-stat-number').textContent = stats.in_progress;
+        document.querySelector('.workpad-stat:nth-child(3) .workpad-stat-number').textContent = stats.completed;
+        
+    } catch (error) {
+        console.error('Error updating stats:', error);
+    }
+}
+
+// Delete task
+async function deleteTask(taskId) {
+    if (!confirm('Are you sure you want to delete this task?')) {
+        return;
+    }
+
+    try {
+        const response = await fetch(`/tasks/${taskId}`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRF-Token': '{{ csrf_token() }}'
+            }
+        });
+
+        if (!response.ok) {
+            const error = await response.text();
+            throw new Error(error);
+        }
+
+        // Remove the task element from DOM
+        const taskElement = document.getElementById(taskId);
+        if (taskElement) {
+            taskElement.remove();
+        }
+        
+        // Refresh the page to update counters
+        window.location.reload();
+
+    } catch (error) {
+        console.error('Error deleting task:', error);
+        alert('Failed to delete task. Please try again.');
+    }
+}
+</script>
+{% endblock %}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Login - Flex-Work</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css', v=range(1000)|random) }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="bg-image"></div>
+        <div class="login-box">
+            <h1><i class="fas fa-bolt"></i> Flex-Work</h1>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="error-message">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <form class="login-form" method="POST" action="{{ url_for('login_credentials') }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <div class="form-group">
+                    <label for="username"><i class="fas fa-user"></i> Username/ID</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-lock"></i> Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="login-button">Login</button>
+            </form>
+            <div class="signup-prompt">
+                <p>Not Signed Up Yet?</p>
+                <a href="{{ url_for('sign_up') }}" class="signup-button">Sign Up Now</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

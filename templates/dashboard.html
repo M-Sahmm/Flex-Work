@@ -1,0 +1,396 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block additional_styles %}
+    <style>
+        :root {
+            --bg-primary: #1E1E1E;
+            --bg-secondary: #2D2D2D;
+            --accent: #FFE566;
+            --text-primary: #E0E0E0;
+            --text-secondary: #808080;
+            --card-bg: #2D2D2D;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary) url('static/Flex-BG.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            background-color: var(--bg-secondary);
+        margin: 16px;
+    padding: 24px;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            height: calc(100vh - 32px);
+            box-shadow: var(--shadow);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .user-profile-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .user-profile-info h3 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .user-profile i {
+            font-size: 24px;
+            color: var(--accent);
+        }
+
+        .nav-section-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            padding: 0 12px;
+            margin-bottom: 4px;
+        }
+
+        .main-content {
+            padding: 32px;
+        }
+
+        .panels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            padding: 24px;
+        }
+
+        .panel {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.2s;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .panel:hover {
+            transform: translateY(-4px);
+        }
+
+        .panel-link {
+            padding: 24px;
+            display: block;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .panel h2 {
+            margin: 0;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .more-icon {
+            color: var(--text-secondary);
+            transition: transform 0.2s;
+        }
+
+        .panel:hover .more-icon {
+            transform: translateX(4px);
+        }
+
+        .panel-stats {
+            margin: 20px 0;
+        }
+
+        .stat-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            margin-bottom: 16px;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .panel-content {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .accent-panel {
+            background-color: var(--accent);
+            color: var(--bg-primary);
+        }
+
+        .accent-panel .panel-link,
+        .accent-panel h2,
+        .accent-panel .stat-number {
+            color: var(--bg-primary);
+        }
+
+        .accent-panel .panel-content,
+        .accent-panel .stat-label,
+        .accent-panel .more-icon {
+            color: rgba(0, 0, 0, 0.7);
+        }
+
+        .accent-panel .stat-circle {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .light-panel {
+            background-color: #3D3D3D;
+        }
+
+        .dark-panel {
+            background-color: #2D2D2D;
+        }
+
+        .dark-panel .panel-link,
+        .dark-panel h2,
+        .dark-panel .stat-number,
+        .dark-panel .panel-content,
+        .dark-panel .stat-label,
+        .dark-panel .more-icon {
+            color: var(--text-primary);
+        }
+
+        .dark-panel .stat-circle {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .logout-button {
+            background-color: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .logout-button:hover {
+            background-color: var(--accent);
+            color: var(--bg-primary);
+        }
+
+        .sidebar-footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 16px;
+            margin: 16px 16px 16px 0;
+            background-color: var(--bg-secondary);
+            border-radius: 16px;
+            overflow-y: auto;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px;
+            background-color: var(--bg-primary);
+            border-radius: 12px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-header h1 {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--accent);
+            font-size: 24px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .header-date {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .panels-section {
+            padding: 0 24px;
+        }
+
+        .section-title {
+            color: var(--text-primary);
+            font-size: 18px;
+            font-weight: 500;
+            margin: 0 0 24px 0;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="main-content">
+        <div class="dashboard-header">
+            <h1><i class="fas fa-tachometer-alt"></i> Welcome Back!</h1>
+            <div class="header-actions">
+                <span class="header-date">{{ current_date }}</span>
+            </div>
+        </div>
+
+        <div class="panels-section">
+            <h2 class="section-title">Quick Access</h2>
+            <div class="panels-grid">
+                <!-- Groups Panel -->
+                <div class="panel accent-panel">
+                    <a href="{{ url_for('groups') }}" class="panel-link">
+                        <div class="panel-header">
+                            <h2><i class="fas fa-users"></i> Groups</h2>
+                            <span class="more-icon"><i class="fas fa-chevron-right"></i></span>
+                        </div>
+                        <div class="panel-stats">
+                            <div class="stat-circle">
+                                <span class="stat-number">{{ groups_count }}</span>
+                                <span class="stat-label">Groups</span>
+                            </div>
+                        </div>
+                        <div class="panel-content">
+                            <p>Manage your groups and team collaborations here.</p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Inventory Panel -->
+                <div class="panel dark-panel">
+                    <a href="{{ url_for('inventory') }}" class="panel-link">
+                        <div class="panel-header">
+                            <h2><i class="fas fa-boxes"></i> Inventory</h2>
+                            <span class="more-icon"><i class="fas fa-chevron-right"></i></span>
+                        </div>
+                        <div class="panel-stats">
+                            <div class="stat-circle">
+                                <span class="stat-number">{{ inventory_count if inventory_count else 0 }}</span>
+                                <span class="stat-label">Items</span>
+                            </div>
+                        </div>
+                        <div class="panel-content">
+                            <p>Track and manage your inventory items.</p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- WorkPad Panel -->
+                <div class="panel dark-panel">
+                    <a href="{{ url_for('workpad') }}" class="panel-link">
+                        <div class="panel-header">
+                            <h2><i class="fas fa-tasks"></i> WorkPad</h2>
+                            <span class="more-icon"><i class="fas fa-chevron-right"></i></span>
+                        </div>
+                        <div class="panel-stats">
+                            <div class="stat-circle">
+                                <span class="stat-number">{{ tasks_count if tasks_count else 0 }}</span>
+                                <span class="stat-label">Tasks</span>
+                            </div>
+                        </div>
+                        <div class="panel-content">
+                            <p>Your personal workspace for tasks and notes.</p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Bulletin Board Panel -->
+                <div class="panel accent-panel">
+                    <a href="{{ url_for('bulletin') }}" class="panel-link">
+                        <div class="panel-header">
+                            <h2><i class="fas fa-clipboard"></i> Bulletin Board</h2>
+                            <span class="more-icon"><i class="fas fa-chevron-right"></i></span>
+                        </div>
+                        <div class="panel-stats">
+                            <div class="stat-circle">
+                                <span class="stat-number">{{ announcements_count if announcements_count else 0 }}</span>
+                                <span class="stat-label">Updates</span>
+                            </div>
+                        </div>
+                        <div class="panel-content">
+                            <p>Stay updated with announcements and news.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Add CSRF token to all fetch requests
+    async function fetchWithCSRF(url, options = {}) {
+        const defaultOptions = {
+            headers: {
+                'X-CSRFToken': '{{ csrf }}',
+                'Content-Type': 'application/json'
+            },
+            credentials: 'same-origin'
+        };
+        return fetch(url, { ...defaultOptions, ...options });
+    }
+</script>
+{% endblock %}

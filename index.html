@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flex-Work CRM - Streamline Your Business</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Base styles */
+    :root {
+      --bg-primary: #1E1E1E;
+      --bg-secondary: #2D2D2D;
+      --accent: #FFE566;
+      --text-primary: #E0E0E0;
+      --text-secondary: #808080;
+      --card-bg: #2D2D2D;
+      --border-color: #3D3D3D;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Container */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    /* Utility classes */
+    .flex {
+      display: flex;
+    }
+
+    .flex-col {
+      flex-direction: column;
+    }
+
+    .items-center {
+      align-items: center;
+    }
+
+    .justify-between {
+      justify-content: space-between;
+    }
+
+    .justify-center {
+      justify-content: center;
+    }
+
+    .gap-2 {
+      gap: 0.5rem;
+    }
+
+    .gap-4 {
+      gap: 1rem;
+    }
+
+    .gap-6 {
+      gap: 1.5rem;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .font-bold {
+      font-weight: 700;
+    }
+
+    .text-sm {
+      font-size: 0.875rem;
+    }
+
+    .text-lg {
+      font-size: 1.125rem;
+    }
+
+    .text-xl {
+      font-size: 1.25rem;
+    }
+
+    .text-2xl {
+      font-size: 1.5rem;
+    }
+
+    .text-3xl {
+      font-size: 1.875rem;
+    }
+
+    .text-4xl {
+      font-size: 2.25rem;
+    }
+
+    .text-5xl {
+      font-size: 3rem;
+    }
+
+    .text-muted {
+      color: var(--text-secondary);
+    }
+
+    .text-accent {
+      color: var(--accent);
+    }
+
+    .bg-accent {
+      background-color: var(--accent);
+    }
+
+    .bg-card {
+      background-color: var(--card-bg);
+    }
+
+    .rounded-lg {
+      border-radius: 0.5rem;
+    }
+
+    .rounded-full {
+      border-radius: 9999px;
+    }
+
+    .border {
+      border: 1px solid var(--border-color);
+    }
+
+    .border-t {
+      border-top: 1px solid var(--border-color);
+    }
+
+    .border-b {
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .shadow-sm {
+      box-shadow: var(--shadow);
+    }
+
+    .p-2 {
+      padding: 0.5rem;
+    }
+
+    .p-6 {
+      padding: 1.5rem;
+    }
+
+    .py-1 {
+      padding-top: 0.25rem;
+      padding-bottom: 0.25rem;
+    }
+
+    .py-6 {
+      padding-top: 1.5rem;
+      padding-bottom: 1.5rem;
+    }
+
+    .py-16 {
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+    }
+
+    .py-20 {
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+    }
+
+    .px-3 {
+      padding-left: 0.75rem;
+      padding-right: 0.75rem;
+    }
+
+    .px-4 {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    .mt-2 {
+      margin-top: 0.5rem;
+    }
+
+    .mt-4 {
+      margin-top: 1rem;
+    }
+
+    .mt-6 {
+      margin-top: 1.5rem;
+    }
+
+    .mt-12 {
+      margin-top: 3rem;
+    }
+
+    .mb-12 {
+      margin-bottom: 3rem;
+    }
+
+    .ml-2 {
+      margin-left: 0.5rem;
+    }
+
+    .w-full {
+      width: 100%;
+    }
+
+    .h-5 {
+      height: 1.25rem;
+    }
+
+    .h-6 {
+      height: 1.5rem;
+    }
+
+    .h-10 {
+      height: 2.5rem;
+    }
+
+    .h-12 {
+      height: 3rem;
+    }
+
+    .h-16 {
+      height: 4rem;
+    }
+
+    .w-5 {
+      width: 1.25rem;
+    }
+
+    .w-6 {
+      width: 1.5rem;
+    }
+
+    .w-10 {
+      width: 2.5rem;
+    }
+
+    .w-12 {
+      width: 3rem;
+    }
+
+    .min-h-screen {
+      min-height: 100vh;
+    }
+
+    .aspect-video {
+      aspect-ratio: 16 / 9;
+    }
+
+    .object-cover {
+      object-fit: cover;
+    }
+
+    .overflow-hidden {
+      overflow: hidden;
+    }
+
+    .sticky {
+      position: sticky;
+    }
+
+    .top-0 {
+      top: 0;
+    }
+
+    .z-50 {
+      z-index: 50;
+    }
+
+    .grid {
+      display: grid;
+    }
+
+    .grid-cols-1 {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+    .space-y-2 > * + * {
+      margin-top: 0.5rem;
+    }
+
+    .space-y-4 > * + * {
+      margin-top: 1rem;
+    }
+
+    /* Components */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.375rem;
+      font-weight: 500;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .btn-sm {
+      height: 2rem;
+      padding-left: 0.75rem;
+      padding-right: 0.75rem;
+      font-size: 0.875rem;
+    }
+
+    .btn-lg {
+      height: 2.75rem;
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+      font-size: 1rem;
+    }
+
+    .btn-primary {
+      background-color: var(--accent);
+      color: var(--bg-primary);
+    }
+
+    .btn-primary:hover {
+      background-color: rgba(255, 229, 102, 0.9);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+    }
+
+    .btn-outline:hover {
+      background-color: rgba(255, 229, 102, 0.1);
+    }
+
+    .btn-secondary {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+    }
+
+    .btn-secondary:hover {
+      background-color: rgba(30, 30, 30, 0.9);
+    }
+
+    .btn-outline-light {
+      background-color: transparent;
+      border: 1px solid rgba(224, 224, 224, 0.2);
+      color: var(--bg-primary);
+    }
+
+    .btn-outline-light:hover {
+      background-color: rgba(30, 30, 30, 0.1);
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border-radius: 0.5rem;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow);
+    }
+
+    .feature-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 2.5rem;
+      width: 2.5rem;
+      border-radius: 9999px;
+      background-color: rgba(255, 229, 102, 0.1);
+      color: var(--accent);
+    }
+
+    .module-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 3rem;
+      width: 3rem;
+      border-radius: 0.5rem;
+      background-color: rgba(255, 229, 102, 0.1);
+      color: var(--accent);
+    }
+
+    .check-icon {
+      color: var(--accent);
+      margin-right: 0.5rem;
+    }
+
+    /* Header */
+    header {
+      backdrop-filter: blur(8px);
+      background-color: rgba(30, 30, 30, 0.8);
+    }
+
+    /* Responsive */
+    @media (min-width: 768px) {
+      .md\:flex {
+        display: flex;
+      }
+
+      .md\:hidden {
+        display: none;
+      }
+
+      .md\:grid-cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .md\:py-0 {
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+
+      .md\:py-24 {
+        padding-top: 6rem;
+        padding-bottom: 6rem;
+      }
+
+      .md\:py-28 {
+        padding-top: 7rem;
+        padding-bottom: 7rem;
+      }
+
+      .md\:px-6 {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+      }
+
+      .md\:h-16 {
+        height: 4rem;
+      }
+
+      .md\:flex-row {
+        flex-direction: row;
+      }
+
+      .md\:text-xl {
+        font-size: 1.25rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .lg\:grid-cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .lg\:grid-cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .lg\:gap-12 {
+        gap: 3rem;
+      }
+
+      .lg\:order-1 {
+        order: 1;
+      }
+
+      .lg\:order-2 {
+        order: 2;
+      }
+
+      .lg\:ml-auto {
+        margin-left: auto;
+      }
+    }
+
+    /* Mobile menu */
+    .mobile-menu {
+      display: none;
+    }
+
+    .mobile-menu.active {
+      display: block;
+    }
+
+    /* Hero section gradient */
+    .bg-gradient {
+      background: linear-gradient(to bottom, var(--bg-primary), var(--card-bg));
+    }
+
+    /* CTA section */
+    .cta-section {
+      background-color: var(--accent);
+      color: var(--bg-primary);
+    }
+  </style>
+</head>
+<body>
+  <div class="flex flex-col min-h-screen">
+    <!-- Navigation -->
+    <header class="sticky top-0 z-50 w-full border-b">
+      <div class="container flex h-16 items-center justify-between">
+        <div class="flex items-center gap-2 font-bold text-xl">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-accent">
+            <path d="M3 3v18h18"></path>
+            <path d="M7 16h4"></path>
+            <path d="M15 16h2"></path>
+            <path d="M7 12h2"></path>
+            <path d="M13 12h4"></path>
+            <path d="M7 8h4"></path>
+            <path d="M15 8h2"></path>
+          </svg>
+          <span>Flex-Work CRM</span>
+        </div>
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="#features" class="text-sm font-medium hover:text-accent">Features</a>
+          <a href="#dashboard" class="text-sm font-medium hover:text-accent">Dashboard</a>
+          <a href="#modules" class="text-sm font-medium hover:text-accent">Modules</a>
+        </nav>
+        <div class="flex items-center gap-4">
+          <a href="/login" class="btn btn-outline btn-sm">Log in</a>
+          <a href="/signup" class="btn btn-primary btn-sm">Sign up</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="flex-1">
+      <!-- Hero Section -->
+      <section class="py-20 md:py-28 bg-gradient">
+        <div class="container px-4 md:px-6">
+          <div class="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
+            <div class="flex flex-col gap-4">
+              <h1 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+                Streamline Your Business with Flex-Work CRM
+              </h1>
+              <p class="text-muted md:text-xl">
+                A powerful customer relationship management system that helps you manage organizations, tasks, inventory, and communications all in one place.
+              </p>
+              <div class="flex flex-col sm:flex-row gap-3 mt-4">
+                <a href="/signup" class="btn btn-primary btn-lg">
+                  Get Started
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 h-4 w-4">
+                    <path d="M5 12h14"></path>
+                    <path d="m12 5 7 7-7 7"></path>
+                  </svg>
+                </a>
+                <a href="#features" class="btn btn-outline btn-lg">Learn More</a>
+              </div>
+            </div>
+            <div class="relative lg:ml-auto">
+              <div class="relative overflow-hidden rounded-lg border card">
+                <img 
+                  src="https://placehold.co/800x450/2D2D2D/808080?text=Dashboard+Preview" 
+                  alt="Flex-Work Dashboard" 
+                  class="aspect-video object-cover w-full"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Features Section -->
+      <section id="features" class="py-16 md:py-24">
+        <div class="container px-4 md:px-6">
+          <div class="flex flex-col items-center justify-center space-y-4 text-center">
+            <div class="space-y-2">
+              <div class="inline-block rounded-lg bg-accent/10 px-3 py-1 text-sm text-accent">
+                Key Features
+              </div>
+              <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+                Everything You Need to Manage Your Business
+              </h2>
+              <p class="max-w-[900px] text-muted md:text-xl">
+                Flex-Work CRM provides a comprehensive set of tools to help you manage your business efficiently.
+              </p>
+            </div>
+          </div>
+          <div class="mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 mt-12">
+            <!-- Feature 1 -->
+            <div class="flex flex-col gap-2 p-6 card">
+              <div class="feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                  <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+              </div>
+              <h3 class="text-lg font-bold">Secure Authentication</h3>
+              <p class="text-sm text-muted">Robust user registration, login, and password management with advanced security features.</p>
+            </div>
+            
+            <!-- Feature 2 -->
+            <div class="flex flex-col gap-2 p-6 card">
+              <div class="feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                  <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path>
+                  <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path>
+                  <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"></path>
+                  <path d="M10 6h4"></path>
+                  <path d="M10 10h4"></path>
+                  <path d="M10 14h4"></path>
+                  <path d="M10 18h4"></path>
+                </svg>
+              </div>
+              <h3 class="text-lg font-bold">Organization Management</h3>
+              <p class="text-sm text-muted">Create and manage organizations with role-based access control and member invitations.</p>
+            </div>
+            
+            <!-- Feature 3 -->
+            <div class="flex flex-col gap-2 p-6 card">
+              <div class="feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                  <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path>
+                  <path d="m3.3 7 8.7 5 8.7-5"></path>
+                  <path d="M12 22V12"></path>
+                </svg>
+              </div>
+              <h3 class="text-lg font-bold">Inventory Tracking</h3>
+              <p class="text-sm text-muted">Comprehensive inventory management with file attachments, search, and export capabilities.</p>
+            </div>
+            
+            <!-- Feature 4 -->
+            <div class="flex flex-col gap-2 p-6 card">
+              <div class="feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                  <path d="M3 3h18v18H3z"></path>
+                  <path d="M3 9h18"></path>
+                  <path d="M3 15h18"></path>
+                  <path d="M9 3v18"></path>
+                  <path d="M15 3v18"></path>
+                </svg>
+              </div>
+              <h3 class="text-lg font-bold">Task Management</h3>
+              <p class="text-sm text-muted">Kanban-style task management with drag-and-drop interface, priorities, and assignments.</p>
+            </div>
+            
+            <!-- Feature 5 -->
+            <div class="flex flex-col gap-2 p-6 card">
+              <div class="feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                  <path d="m3 15 5.12-5.12A3 3 0 0 1 10.24 9H13a2 2 0 0 1 2 2v1a2 2 0 0 0 2 2h.76a3 3 0 0 0 2.12-.88L21 12"></path>
+                  <path d="M2 20h.01"></path>
+                  <path d="M7 20v-3"></path>
+                  <path d="M12 20v-6"></path>
+                  <path d="M17 20v-3"></path>
+                  <path d="M22 20h.01"></path>
+                </svg>
+              </div>
+              <h3 class="text-lg font-bold">Bulletin Board</h3>
+              <p class="text-sm text-muted">Organization-wide announcements with rich text editing, file attachments, and notifications.</p>
+            </div>
+            
+            <!-- Feature 6 -->
+            <div class="flex flex-col gap-2 p-6 card">
+              <div class="feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+              </div>
+              <h3 class="text-lg font-bold">Team Collaboration</h3>
+              <p class="text-sm text-muted">Streamline communication and collaboration within your organization.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Dashboard Section -->
+      <section id="dashboard" class="py-16 md:py-24 bg-card">
+        <div class="container px-4 md:px-6">
+          <div class="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
+            <div class="relative order-2 lg:order-1">
+              <div class="relative overflow-hidden rounded-lg border card">
+                <img 
+                  src="https://placehold.co/800x450/2D2D2D/808080?text=Dashboard+Interface" 
+                  alt="Flex-Work Dashboard Interface" 
+                  class="aspect-video object-cover w-full"
+                />
+              </div>
+            </div>
+            <div class="flex flex-col gap-4 order-1 lg:order-2">
+              <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl">
+                Powerful Dashboard
+              </h2>
+              <p class="text-muted">
+                Get a complete overview of your business with our intuitive dashboard. Monitor key metrics, access important features, and stay on top of your tasks.
+              </p>
+              <ul class="grid gap-3 mt-4">
+                <li class="flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-accent">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <path d="m9 11 3 3L22 4"></path>
+                  </svg>
+                  <span>Real-time statistics and counts</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-accent">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <path d="m9 11 3 3L22 4"></path>
+                  </svg>
+                  <span>Quick access to all major features</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-accent">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <path d="m9 11 3 3L22 4"></path>
+                  </svg>
+                  <span>Personalized welcome message</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-accent">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <path d="m9 11 3 3L22 4"></path>
+                  </svg>
+                  <span>Activity feed for recent updates</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-accent">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <path d="m9 11 3 3L22 4"></path>
+                  </svg>
+                  <span>Quick-action buttons for common tasks</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-accent">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <path d="m9 11 3 3L22 4"></path>
+                  </svg>
+                  <span>Responsive grid layout for all devices</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Modules Section -->
+      <section id="modules" class="py-16 md:py-24">
+        <div class="container px-4 md:px-6">
+          <div class="flex flex-col items-center justify-center space-y-4 text-center mb-12">
+            <div class="space-y-2">
+              <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl">
+                Comprehensive Modules
+              </h2>
+              <p class="max-w-[900px] text-muted md:text-xl">
+                Flex-Work CRM offers a range of modules to help you manage different aspects of your business.
+              </p>
+            </div>
+          </div>
+          <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <!-- Module 1 -->
+            <div class="flex flex-col gap-4 p-6 card">
+              <div class="module-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6">
+                  <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path>
+                  <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path>
+                  <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"></path>
+                  <path d="M10 6h4"></path>
+                  <path d="M10 10h4"></path>
+                  <path d="M10 14h4"></path>
+                  <path d="M10 18h4"></path>
+                </svg>
+              </div>
+              <h3 class="text-xl font-bold">Organizations</h3>
+              <p class="text-muted">Manage multiple organizations with role-based access control.</p>
+              <ul class="grid gap-2 mt-2">
+                <li class="flex items-center gap-2 text-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-accent">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <path d="m9 11 3 3L22 4"></path>
+                  </svg>
+                  <span>Create and manage organizations</span>
+                </li>
+                <li class="flex items-center gap-2 text-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-accent">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <path d="m9 11 3 3L22 4"></path>
+                  </svg>
+                  <span>Role-based access control</span>
+                </li>
+                <li class="flex items-center gap-2 text-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-accent">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <path d="m9 11 3 3L22 4"></path>
+                  </svg>
+                  <span>Member invitation system</span>
+                </li>
+                <li class="flex items-center gap-2 text-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-accent">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <path d="m9 11 3 3L22 4"></path>
+                  </svg>
+                  <span>Organization settings management</span>
+                </li>
+                <li class="flex items-center gap-2 text-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-accent">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <path d="m9 11 3 3L22 4"></path>
+                  </svg>
+                  <span>Member list with roles</span>
+                </li>
+              </ul>
+            </div>
+            
+            <!-- Module 2 -->
+            <div class="flex flex-col gap-4 p-6 card">
+              <div class="module-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6">
+                  <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path>
+                  <path d="m3.3 7 8.7 5 8.7-5"></path>
+                  <path d="M12 22V12"></path>
+                </svg>
+              </div>
+              <h3 class="text-xl font-bold">Inventory</h3>
+              <p class="text-muted">Track and manage your inventory with ease.</p>
+              <ul class="grid gap-2 mt-2">
+                <li class="flex items-center gap-2 text-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-accent">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <path d="m9 11 3 3L22 4"></path>
+                  </svg>
+                  <span>Add/Edit/Delete inventory items</span>
+                </li>
+                <li class="flex items-center gap-2 text-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-accent">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <path d="m9 11 3 3L22 4"></path>
+                  </svg>
+                  <span>File attachment support</span>
+                </li>
+                <li class="flex items-center gap-2 text-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-accent">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <path d="m9 11 3 3L22 4"></path>
+                  </svg>
+                  <span>Search and filter functionality</span>
+                </li>
+                <li class="flex items-center gap-2 text-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-accent">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <path d="m9 11 3 3L22 4"></path>
+                  </svg>
+                  <span>Categories and tags</span>
+                </li>
+                <li class="flex items-center gap-2 text-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-accent">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <path d="m9 11 3 3L22 4"></path>
+                  </svg>
+                  <span>Stock level tracking</span>
+                </li>
+              </ul>
+            </div>
+            
+            <!-- Module 3 -->
+            <div class="flex flex-col gap-4 p-6 card">
+              <div class="module-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6">
+                  <path d="M3 3h18v18H3z"></path>
+                  <path d="M3 9h18"></path>
+                  <path d="M3 15h18"></path>
+                  <path d="M9 3v18"></path>
+                  <path d="M15 3v18"></path>
+                </svg>
+              </div>
+              <h3 class="text-xl font-bold">WorkPad</h3>
+              <p class="text-muted">Manage tasks and projects with a Kanban-style interface.</p>
+              <ul class="grid gap-2 mt-2">
+                <li class="flex items-center gap-2 text-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-accent">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <path d="m9 11 3 3L22 4"></path>
+                  </svg>
+                  <span>Kanban-style task management</span>
+                </li>
+                <li class="flex items-center gap-2 text-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-accent">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <path d="m9 11 3 3L22 4"></path>
+                  </svg>
+                  <span>Drag-and-drop interface</span>
+                </li>
+                <li class="flex items-center gap-2 text-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-accent">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <path d="m9 11 3 3L22 4"></path>
+                  </svg>
+                  <span>Task priorities and deadlines</span>
+                </li>
+                <li class="flex items-center gap-2 text-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-accent">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <path d="m9 11 3 3L22 4"></path>
+                  </svg>
+                  <span>Task assignments</span>
+                </li>
+                <li class="flex items-center gap-2 text-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-accent">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <path d="m9 11 3 3L22 4"></path>
+                  </svg>
+                  <span>Progress tracking</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA Section -->
+      <section class="py-16 md:py-24 cta-section">
+        <div class="container px-4 md:px-6">
+          <div class="flex flex-col items-center justify-center space-y-4 text-center">
+            <div class="space-y-2">
+              <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl">
+                Ready to Transform Your Business?
+              </h2>
+              <p class="max-w-[600px] md:text-xl">
+                Join thousands of businesses that use Flex-Work CRM to streamline their operations.
+              </p>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-3 mt-6">
+              <a href="/signup" class="btn btn-secondary btn-lg">
+                Sign Up Now
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 h-4 w-4">
+                  <path d="M5 12h14"></path>
+                  <path d="m12 5 7 7-7 7"></path>
+                </svg>
+              </a>
+              <a href="/login" class="btn btn-outline-light btn-lg">
+                Log In
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t py-6 md:py-0 bg-card">
+      <div class="container flex flex-col md:flex-row items-center justify-between gap-4 md:h-16">
+        <div class="flex items-center gap-2 text-sm text-muted">
+          <span>© 2025 Flex-Work CRM. All rights reserved.</span>
+        </div>
+        <nav class="flex items-center gap-4 text-sm">
+          <a href="#" class="text-muted hover:text-accent">Terms</a>
+          <a href="#" class="text-muted hover:text-accent">Privacy</a>
+          <a href="#" class="text-muted hover:text-accent">Contact</a>
+        </nav>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
+

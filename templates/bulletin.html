@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}Bulletin Board{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1><i class="fas fa-bullhorn"></i> Bulletin Board</h1>
+</div>
+            <div class="bulletin-container">
+            {% if admin_organizations %}
+            <div class="create-announcement">
+                <h3><i class="fas fa-plus-circle"></i> Create New Announcement</h3>
+                <form class="announcement-form" onsubmit="createAnnouncement(event)">
+                    <div class="form-group">
+                        <label for="organization">Organization:</label>
+                        <select id="organization" name="organization" required>
+                            <option value="">Select an organization</option>
+                            {% for org in admin_organizations %}
+                            <option value="{{ org.id }}">{{ org.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Title:</label>
+                        <input type="text" id="title" name="title" required placeholder="Enter announcement title">
+                    </div>
+                    <div class="form-group">
+                        <label for="content">Content:</label>
+                        <textarea id="content" name="content" required placeholder="Enter announcement content"></textarea>
+                    </div>
+                    <button type="submit" class="submit-announcement-btn">
+                        <i class="fas fa-paper-plane"></i> Post Announcement
+                    </button>
+                </form>
+            </div>
+            {% endif %}
+
+            <div class="announcements-list">
+                {% if announcements %}
+                    {% for announcement in announcements %}
+                    <div class="announcement-card">
+                        {% if announcement.organization_id in admin_org_ids %}
+                        <button class="delete-announcement-btn" onclick="deleteAnnouncement('{{ announcement.id }}')" title="Delete announcement">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        {% endif %}
+                        <div class="announcement-header">
+                            <div class="announcement-title">{{ announcement.title }}</div>
+                            <div class="announcement-info">
+                                <div class="announcement-meta">
+                                    Posted in {{ announcement.organization_name }} by {{ announcement.author_name }}
+                                    on {{ announcement.formatted_date }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="announcement-content">
+                            {{ announcement.content }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="no-announcements">
+                        <i class="fas fa-info-circle"></i> No announcements to display
+                    </div>
+                {% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+        async function deleteAnnouncement(announcementId) {
+            if (!confirm('Are you sure you want to delete this announcement?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch('/announcements', {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({ announcement_id: announcementId })
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    alert(result.error || 'Failed to delete announcement');
+                }
+            } catch (error) {
+                alert('An error occurred while deleting the announcement');
+            }
+        }
+
+        async function createAnnouncement(event) {
+            event.preventDefault();
+            const form = event.target;
+            
+            const data = {
+                organization_id: parseInt(form.organization.value),
+                title: form.title.value,
+                content: form.content.value
+            };
+
+            try {
+                const response = await fetch('/announcements', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    alert(result.error || 'Failed to create announcement');
+                }
+            } catch (error) {
+                alert('An error occurred while creating the announcement');
+            }
+        }
+    </script>
+{% endblock %}
