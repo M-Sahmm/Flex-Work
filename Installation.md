@@ -6,8 +6,7 @@ This is a demonstration project only!
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/Flex-CRM.git
-cd Flex-CRM
+git clone https://github.com/M-Sahmm/Flex-Work.git
 ```
 
 2. Create and activate a virtual environment:
