@@ -14,11 +14,13 @@ A simple CRM (Customer Relationship Management) system built with Flask. This is
 
 ### Login Page:
 
-![alt text](<assets/Screenshot 2025-04-03 at 9.34.07 PM.png>)
+![image](https://github.com/user-attachments/assets/8d3920f2-b64a-49f6-a8c1-4ce21aa279f0)
+
 
 ### Sign Up Page:
 
-![alt text](<assets/Screenshot 2025-04-03 at 9.34.14 PM.png>)
+![image](https://github.com/user-attachments/assets/a3228fc8-720f-4700-bece-5f2b6f18a65d)
+
 
 ### 2. Dashboard 📊
 - 📈 Real-time statistics and counts
@@ -30,7 +32,8 @@ A simple CRM (Customer Relationship Management) system built with Flask. This is
 
 ### Dashboard:
 
-![alt text](<assets/Screenshot 2025-04-03 at 11.48.20 PM.png>)
+![image](https://github.com/user-attachments/assets/bb1cce05-964a-442a-89b7-d3624da0b6bd)
+
 
 ### 3. Groups/Organizations 👥
 - 🏢 Create and manage organizations
@@ -43,7 +46,7 @@ A simple CRM (Customer Relationship Management) system built with Flask. This is
 
 ### Organization Management:
 
-![alt text](<assets/Screenshot 2025-04-03 at 9.31.09 PM.png>)
+![image](https://github.com/user-attachments/assets/8c64c150-1fc6-4907-b288-1c84c8053c50)
 
 
 ### 4. Inventory Management 📦
@@ -57,7 +60,7 @@ A simple CRM (Customer Relationship Management) system built with Flask. This is
 
 ### Inventory Management:
 
-![alt text](<assets/Screenshot 2025-04-03 at 9.30.38 PM.png>)
+![image](https://github.com/user-attachments/assets/ffc4092a-2531-432c-9bf8-05ce261f0175)
 
 
 ### 5. WorkPad 📝
@@ -71,7 +74,8 @@ A simple CRM (Customer Relationship Management) system built with Flask. This is
 
 ### WorkPad - Task Management:
 
-![alt text](<assets/Screenshot 2025-04-03 at 11.52.07 PM.png>)
+![image](https://github.com/user-attachments/assets/ac5f6e85-f6dc-45c0-ad3c-292439c50c49)
+
 
 ### 6. Bulletin Board 📰
 - 📢 Organization-wide announcements
@@ -84,7 +88,7 @@ A simple CRM (Customer Relationship Management) system built with Flask. This is
 
 ### Bulletin Board:
 
-![alt text](<assets/Screenshot 2025-04-03 at 11.52.07 PM-1.png>)
+![image](https://github.com/user-attachments/assets/6da9b673-d429-421c-885f-66901004ee5c)
 
 
 ### 7. Account Manager/Settings 🛠️
