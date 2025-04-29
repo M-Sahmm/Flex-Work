@@ -88,7 +88,8 @@ A simple CRM (Customer Relationship Management) system built with Flask. This is
 
 ### Bulletin Board:
 
-![image](https://github.com/user-attachments/assets/6da9b673-d429-421c-885f-66901004ee5c)
+![image](https://github.com/user-attachments/assets/77188005-74e0-4a1b-a9b5-d2894b9c1a1f)
+
 
 
 ### 7. Account Manager/Settings 🛠️
